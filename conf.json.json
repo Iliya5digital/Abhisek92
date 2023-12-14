@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Ylianst/MeshCentral/master/meshcentral-config-schema.json",
+  "settings": {
+    "WANonly": true,
+    "LANonly": false,
+    "Port": 443,
+    "RedirPort": 80,
+    "NoTls": false,
+    "AllowLoginToken": true,
+    "AllowFraming": true,
+    "SessionKey": "xxxxxxxxxxx",
+    "Minify": true,
+    "WebRTC": true,
+    "ClickOnce": false,
+    "WebRtConfig": {
+    "iceServers": [
+        {
+          "urls": "stun:stun.services.mozilla.com"
+        },
+        {
+          "urls": "stun:stun.l.google.com:19302"
+        }
+      ]
+    }
+  },
+  "domains": {
+    "": {
+      "title": "Mesh Central",
+      "title2": "Remote Management",
+      "_minify": true,
+      "newAccounts": false,
+      "userQuota": 1048576,
+      "meshQuota": 67108864
+    }
+  }
+}

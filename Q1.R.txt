@@ -1,0 +1,43 @@
+library("openxlsx")
+library("ggplot2")
+library("stats")
+
+df <- read.xlsx("Labour Market.xlsx")
+freq <- aggregate(df$Employment.Status, by=list(df$Employment.Status), FUN=length)
+# plot this
+g1 <- ggplot(freq, aes(x=Group.1, y=x)) + geom_bar(stat="identity") +
+    scale_x_continuous(breaks=seq(min(freq$Group.1), max(freq$Group.1), 1), name="Employment Status") +
+    scale_y_continuous(breaks=seq(0, max(freq$x) + 1, 5), name="Frequncy Distribution of Employment Status", expand = c(0, 0))
+
+
+ai <- df[c('AGE', 'Income', 'SEX')]
+aim = ai[ai$SEX == 1, ]
+aif = ai[ai$SEX == 2, ]
+
+aim_g <- aggregate(aim$Income, by=list(aim$AGE), FUN=mean)
+aim_g <- aim_g[order(aim_g$Group.1), ]
+# plot this
+gm <- ggplot(aim_g, aes(x=Group.1, y=x)) + geom_line(stat="identity") + geom_point(stat="identity") +
+    scale_x_continuous(breaks=seq(min(aim_g$Group.1), max(aim_g$Group.1), 1), name="Age") +
+    scale_y_continuous(breaks=seq(0, max(aim_g$x) + 1, 100000), name="Income", expand = c(0, 0))
+
+aif_g <- aggregate(aif$Income, by=list(aif$AGE), FUN=mean)
+aif_g <- aif_g[order(aif_g$Group.1), ]
+gf <- ggplot(aif_g, aes(x=Group.1, y=x)) + geom_line(stat="identity") + geom_point(stat="identity") +
+    scale_x_continuous(breaks=seq(min(aif_g$Group.1), max(aif_g$Group.1), 1), name="Age") +
+    scale_y_continuous(breaks=seq(0, max(aif_g$x) + 1, 100000), name="Income", expand=c(0, 0))
+
+aix <- aggregate(ai$Income, by=list(ai$AGE), FUN=mean)
+aix <- aix[order(aix$Group.1), ]
+gx <- ggplot(aix, aes(x=Group.1, y=x)) + geom_line(stat="identity") + geom_point(stat="identity") +
+    scale_x_continuous(breaks=seq(min(aix$Group.1), max(aix$Group.1), 1), name="Age") +
+    scale_y_continuous(breaks=seq(min(aix$x), max(aix$x) + 1, 5), name="Income", expand=c(0, 0))
+
+sd(df$Hours.worked.per.week)
+sd(df$Income)
+
+gender_income <- aggregate(df$Income, by=list(aim$SEX), FUN=mean)
+gender_worktime <- aggregate(df$Length.of.time.at.job , by=list(aim$SEX), FUN=mean)
+gender_weeklyhours <- aggregate(df$Hours.worked.per.week, by=list(aim$SEX), FUN=mean)
+gender_schooling <- aggregate(df$Years.of.secondary.schooling, by=list(aim$SEX), FUN=mean)
+

@@ -1,0 +1,5 @@
+http://bjlkeng.github.io/posts/residual-networks/
+https://github.com/bjlkeng/sandbox/tree/master/notebooks/vae-resnet
+https://keras.io/examples/cifar10_resnet/
+
+https://jalammar.github.io/visual-numpy/
